@@ -65,12 +65,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     physics: NeverScrollableScrollPhysics(),
                     children: [
                       ListTile(
-                        leading: Image.asset('assets/images/luvas.png', height: 50, width: 50),
+                        leading: Image.asset('assets/images/crepe.png', height: 50, width: 50),
                         title: Text('Producto 1'),
                         subtitle: Text('Bs.7.50'),
                       ),
                       ListTile(
-                        leading: Image.asset('assets/images/luvas.png', height: 50, width: 50),
+                        leading: Image.asset('assets/images/frutipiña.png', height: 50, width: 50),
                         title: Text('Producto 2'),
                         subtitle: Text('Bs.7.50'),
                       ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Importa Firestore
 import 'package:luvasi/models/cart_item.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -116,7 +119,7 @@ class _OrderPageState extends State<OrderPage> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  _showQrDialog(context, total);
+                  _completeOrder(total);
                 },
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -132,6 +135,44 @@ class _OrderPageState extends State<OrderPage> {
         ),
       ),
     );
+  }
+
+  void _completeOrder(double total) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        print('No hay usuario autenticado');
+        return;
+      }
+
+      String email = user.email!;
+      print('Enviando pedido al correo: $email');
+
+      // Registra la compra en Firestore
+      await FirebaseFirestore.instance.collection('orders').add({
+        'email': email,
+        'total': total,
+        'items': widget.cartItems.map((item) => {
+          'product_id': item.product.id,
+          'name': item.product.name,
+          'price': item.product.price,
+          'quantity': item.quantity,
+        }).toList(),
+        'address': addressController.text,
+        'shippingType': shippingTypeController.text,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      final HttpsCallable callable = FirebaseFunctions.instance.httpsCallable('sendOrderEmail');
+      final response = await callable.call(<String, dynamic>{
+        'email': email,
+        'total': total.toStringAsFixed(2),
+      });
+      print('Respuesta de la función: ${response.data}');
+      _showQrDialog(context, total);
+    } catch (e) {
+      print('Error al completar el pedido: $e');
+    }
   }
 
   void _showQrDialog(BuildContext context, double total) {
