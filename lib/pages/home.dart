@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   width: double.infinity,
                   child: Image.asset(
-                    'assets/images/poratda.jpg',
+                    'assets/images/luvas.png',
                     fit: BoxFit.cover,
                   ),
                 ),
