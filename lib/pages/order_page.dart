@@ -21,7 +21,7 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     double subtotal = widget.cartItems.fold(0, (sum, item) => sum + item.product.price * item.quantity);
-    double shippingCost = 20.00; // Costo de envío fijo
+    double shippingCost = 20.00; // Costo de envío sumado
     double total = subtotal + shippingCost;
 
     return Scaffold(
