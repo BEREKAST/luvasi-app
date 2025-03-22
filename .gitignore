@@ -31,7 +31,7 @@ migrate_working_dir/
 .pub/
 /build/
 
-# Symbolication related
+# Symbolication related a
 app.*.symbols
 
 # Obfuscation related
@@ -41,3 +41,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+

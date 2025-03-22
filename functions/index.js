@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Función para enviar el correo
+// Función para enviar el correo para no modificar
 exports.sendOrderEmail = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     const email = req.body.email;
