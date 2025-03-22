@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController passwordController = TextEditingController();
   String errorMessage = '';
 
-  // Función para validar el formato del correo electrónico
+  // Función para validar el formato del correo electrónico valido
   bool isValidEmail(String email) {
     final emailRegExp = RegExp(
       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
